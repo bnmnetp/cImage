@@ -26,6 +26,13 @@ If you have PIL installed on your system:
 
 If you do not have PIL installed then you are stuck with GIF images only.
 
+If you are using Python 2.6/2.7 I recommend you install Pillow its a simple fork
+of PIL that you can install with easy_install or pip.
+
+If you are using Python 3 You can get a working version of PIL
+Here:  http://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+
 Example
 -------
 
