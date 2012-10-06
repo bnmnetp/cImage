@@ -44,8 +44,8 @@ except:
 
 pilAvailable = True
 try:
-    import Image
-    import ImageTk
+    from PIL import Image
+    from PIL import ImageTk
 except:
     pilAvailable = False
 
@@ -62,7 +62,7 @@ def formatPixel(data):
         return '{#%02x%02x%02x}'%data
     elif isinstance(data,Pixel):
         return '{#%02x%02x%02x}'%data.getColorTuple()
-    
+
 class ImageWin(tk.Canvas):
     """
     ImageWin:  Make a frame to display one or more images.
@@ -94,7 +94,7 @@ class ImageWin(tk.Canvas):
         self.master.destroy()
         self.quit()
         _imroot.update()
-        
+
     def getMouse(self):
         """Wait for mouse click and return a tuple with x,y position in screen coordinates after
         the click"""
@@ -111,14 +111,14 @@ class ImageWin(tk.Canvas):
         self.mouseX = e.x
         self.mouseY = e.y
         if self._mouseCallback:
-            self._mouseCallback(Point(e.x, e.y)) 
-            
+            self._mouseCallback(e.x, e.y)
+
     def exitOnClick(self):
         """When the Mouse is clicked close the window and exit"""
         self.getMouse()
         self._close()
 
-    
+
 class Pixel(object):
     """This simple class abstracts the RGB pixel values."""
     def __init__(self, red, green, blue):
@@ -127,15 +127,15 @@ class Pixel(object):
         self.__green = green
         self.__blue = blue
         self.max = 255
-        
+
     def getRed(self):
         """Return the red component of the pixel"""
         return self.__red
-        
+
     def getGreen(self):
         """Return the green component of the pixel"""
         return self.__green
-        
+
     def getBlue(self):
         """Return the blue component of the pixel"""
         return self.__blue
@@ -188,10 +188,10 @@ class Pixel(object):
             self.max = 255
         else:
             raise ValueError("Error range must be 1.0 or 256")
-            
+
     def __str__(self):
         return str(self.getColorTuple())
-        
+
     def __repr__(self):
         """docstring for __repr__"""
         return str(self.getColorTuple())
@@ -199,7 +199,7 @@ class Pixel(object):
     red = property(getRed, setRed, None, "I'm the red property.")
     green = property(getGreen, setGreen, None, "I'm the green property.")
     blue = property(getBlue, setBlue, None, "I'm the blue property.")
-        
+
 class AbstractImage(object):
     """
     Create an image.  The image may be created in one of four ways:
@@ -246,7 +246,7 @@ class AbstractImage(object):
             self.createBlankImage(height,width)
             for row  in range(height):
                 for col in range(width):
-                    self.setPixel(x,y,Pixel(data[row][col]))
+                    self.setPixel(col,row,Pixel(data[row][col]))
         elif height > 0 and width > 0:
             self.createBlankImage(height,width)
         elif imobj:
@@ -292,10 +292,10 @@ class AbstractImage(object):
 
 
     def clone(self):
-	     """Return a copy of this image"""
-	     newI = AbstractImage(imobj=self.im)
-	     return newI
-        
+         """Return a copy of this image"""
+         newI = AbstractImage(imobj=self.im)
+         return newI
+
     def getHeight(self):
         """Return the height of the image"""
         return self.height
@@ -303,18 +303,18 @@ class AbstractImage(object):
     def getWidth(self):
         """Return the width of the iamge"""
         return self.width
-        
+
     def getTkPixel(self,x,y):
         """Get a pixel at the given x,y coordinate.  The pixel is returned as an rgb color tuple
         for eaxamplle foo.getPixel(10,10) --> (10,200,156) """
         p = [int(j) for j in self.im.get(x,y).split()]
         return Pixel(p[0],p[1],p[2])
-        
+
     def setTkPixel(self,x,y,pixel):
         """Set the color of a pixel at position x,y.  The color must be specified as an rgb tuple (r,g,b) where 
         the rgb values are between 0 and 255."""
         self.im.put(formatPixel(pixel.getColorTuple()),(x,y))
-    
+
     def getPILPixel(self,x,y):
         """docstring for getPILPIxel"""
         p = self.im.getpixel((x,y))
@@ -323,14 +323,14 @@ class AbstractImage(object):
     def setPILPixel(self,x,y,pixel):
         """docstring for setPILPixel"""
         self.im.putpixel((x,y),pixel.getColorTuple())
-    
+
     def setPosition(self,x,y):
         """Set the position in the window where the top left corner of the window should be."""
         self.top = y
         self.left = x
         self.centerX = x + (self.width/2)+3
         self.centerY = y + (self.height/2)+3
-    
+
     def getImage(self):
         if pilAvailable:
             return ImageTk.PhotoImage(self.im)
@@ -345,7 +345,7 @@ class AbstractImage(object):
         self.canvas=win
         self.id = self.canvas.create_image(self.centerX,self.centerY,image=ig)
         _imroot.update()
-        
+
     def saveTk(self,fname=None,ftype='gif'):
         if fname == None:
             fname = self.imFileName
@@ -401,7 +401,7 @@ class FileImage(AbstractImage):
 class EmptyImage(AbstractImage):
     def __init__(self,cols,rows):
         super(EmptyImage, self).__init__(height = rows, width = cols)
-        
+
 class ListImage(AbstractImage):
     def __init__(self,thelist):
         super(ListImage, self).__init__(data=thelist)
