@@ -6,7 +6,7 @@ def grayPixel(p):
 
 def makeGrayScale(imageFile):
     myimagewindow = ImageWin("Image Processing",600,200)
-    oldimage = FileImage(imageFile)            
+    oldimage = Image(imageFile)            
     oldimage.draw(myimagewindow)
 
     width = oldimage.getWidth()
@@ -23,4 +23,4 @@ def makeGrayScale(imageFile):
     newim.draw(myimagewindow)
     myimagewindow.exitOnClick()
 
-makeGrayScale('lcastle.jpg')
+makeGrayScale('lcastle.gif')

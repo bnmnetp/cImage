@@ -67,7 +67,7 @@ class ImageWin(tk.Canvas):
     """
     ImageWin:  Make a frame to display one or more images.
     """
-    def __init__(self,title,width,height):        
+    def __init__(self,title="image window",width=640,height=640):        
         """
         Create a window with a title, width and height.
         """
@@ -117,6 +117,9 @@ class ImageWin(tk.Canvas):
         """When the Mouse is clicked close the window and exit"""
         self.getMouse()
         self._close()
+        
+    def exitonclick(self):
+        self.exitOnClick()
 
 
 class Pixel(object):
@@ -313,7 +316,10 @@ class AbstractImage(object):
     def setTkPixel(self,x,y,pixel):
         """Set the color of a pixel at position x,y.  The color must be specified as an rgb tuple (r,g,b) where 
         the rgb values are between 0 and 255."""
-        self.im.put(formatPixel(pixel.getColorTuple()),(x,y))
+        if x < self.getWidth() and y < self.getHeight():
+            self.im.put(formatPixel(pixel.getColorTuple()),(x,y))
+        else:
+            raise ValueError("Pixel index out of range.")
 
     def getPILPixel(self,x,y):
         """docstring for getPILPIxel"""
@@ -322,7 +328,10 @@ class AbstractImage(object):
 
     def setPILPixel(self,x,y,pixel):
         """docstring for setPILPixel"""
-        self.im.putpixel((x,y),pixel.getColorTuple())
+        if x < self.getWidth() and y < self.getHeight():
+            self.im.putpixel((x,y),pixel.getColorTuple())
+        else:
+            raise ValueError("Pixel index out of range")
 
     def setPosition(self,x,y):
         """Set the position in the window where the top left corner of the window should be."""
@@ -397,7 +406,9 @@ class FileImage(AbstractImage):
     def __init__(self,thefile):
         super(FileImage, self).__init__(fname = thefile)
 
-
+class Image(FileImage):
+    pass
+    
 class EmptyImage(AbstractImage):
     def __init__(self,cols,rows):
         super(EmptyImage, self).__init__(height = rows, width = cols)
