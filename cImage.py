@@ -44,7 +44,7 @@ except:
 
 pilAvailable = True
 try:
-    from PIL import Image
+    from PIL import PIL_Image
     from PIL import ImageTk
 except:
     pilAvailable = False
@@ -265,7 +265,7 @@ class AbstractImage(object):
         self.id = None
 
     def loadPILImage(self,fname):
-        self.im = Image.open(fname)
+        self.im = PIL_Image.open(fname)
         ni = self.im.convert("RGB")
         self.im = ni
 
@@ -280,7 +280,7 @@ class AbstractImage(object):
         self.im = tkinter.PhotoImage(file=fname)
 
     def createBlankPILImage(self,height,width):
-        self.im = Image.new("RGB",(width,height))
+        self.im = PIL_Image.new("RGB",(width,height))
         ni = self.im.convert("RGB")
         self.im = ni
 
@@ -407,7 +407,7 @@ class FileImage(AbstractImage):
         super(FileImage, self).__init__(fname = thefile)
 
 class Image(FileImage):
-    pass
+        pass
     
 class EmptyImage(AbstractImage):
     def __init__(self,cols,rows):
