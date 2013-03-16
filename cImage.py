@@ -44,7 +44,7 @@ except:
 
 pilAvailable = True
 try:
-    from PIL import PIL_Image
+    from PIL import Image as PIL_Image
     from PIL import ImageTk
 except:
     pilAvailable = False
