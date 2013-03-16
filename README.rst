@@ -30,7 +30,9 @@ If you are using Python 2.6/2.7 I recommend you install Pillow its a simple fork
 of PIL that you can install with easy_install or pip.
 
 If you are using Python 3 You can get a working version of PIL
-Here:  http://www.lfd.uci.edu/~gohlke/pythonlibs/
+Here:  https://pypi.python.org/pypi/Pillow/2.0.0
+
+Note that if you scroll down to the bottom you will find binary installations for Windows.  Linux and Mac users can follow the instructions on the page.
 
 
 Example
