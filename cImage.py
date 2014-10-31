@@ -1,11 +1,11 @@
 """
 image.py
-This module provides a simple interface to create a window, load an image and experiment 
+This module provides a simple interface to create a window, load an image and experiment
 with image based algorithms.  Many of which require pixel-by-pixel manipulation.  This
-is a educational module, its not intended to replace the excellent Python Image Library, in fact 
+is a educational module, its not intended to replace the excellent Python Image Library, in fact
 it uses PIL.
 
-The module and its interface and some of the code were inspired/copied by/from John Zelle's graphics.py 
+The module and its interface and some of the code were inspired/copied by/from John Zelle's graphics.py
 which serves a similar purpose in the graphics primitive world.
 """
 
@@ -36,6 +36,11 @@ which serves a similar purpose in the graphics primitive world.
 #   Modify all code so that if PIL is not available then image.py will still
 #   function using Tkimages.  N.B.  Tk restricts image types to gif or ppm
 #
+# Andrew Mertz, Eastern Illinois University
+# October 2014
+# Changes:
+#   Negative indices can be used in Pixel's  __getitem__ function
+#   Pixel's __getitem__ function now supports looping i.e. for value in Pixel(0, 1, 2):
 
 try:
     import tkinter
@@ -67,7 +72,7 @@ class ImageWin(tk.Canvas):
     """
     ImageWin:  Make a frame to display one or more images.
     """
-    def __init__(self,title="image window",width=640,height=640):        
+    def __init__(self,title="image window",width=640,height=640):
         """
         Create a window with a title, width and height.
         """
@@ -117,7 +122,7 @@ class ImageWin(tk.Canvas):
         """When the Mouse is clicked close the window and exit"""
         self.getMouse()
         self._close()
-        
+
     def exitonclick(self):
         self.exitOnClick()
 
@@ -174,14 +179,16 @@ class Pixel(object):
            1 --> green
            2 --> blue
         """
-        if key == 0:
+        if isinstance(key, slice):
+            raise TypeError("Slicing is not supported")
+        if key == 0 or key == -3:
             return self.__red
-        elif key == 1:
+        elif key == 1 or key == -2:
             return self.__green
-        elif key == 2:
+        elif key == 2 or key == -1:
             return self.__blue
         else:
-            raise ValueError("Error %d Index out of range" % key)
+            raise IndexError("Error %d Index out of range" % key)
 
     def setRange(self,pmax):
         """docstring for setRange"""
@@ -211,11 +218,11 @@ class AbstractImage(object):
     3. From another image object
     4. By specifying the height and width to create a blank image.
     """
-    imageCache = {} # tk photoimages go here to avoid GC while drawn 
+    imageCache = {} # tk photoimages go here to avoid GC while drawn
     imageId = 1
     def __init__(self,fname=None,data=[],imobj=None,height=0,width=0):
         """
-        An image can be created using any of the following keyword parameters. When image creation is 
+        An image can be created using any of the following keyword parameters. When image creation is
         complete the image will be an rgb image.
         fname:  A filename containing an image.  Can be jpg, gif, and others
         data:  a list of lists representing the image.  This might be something you construct by
@@ -309,12 +316,12 @@ class AbstractImage(object):
 
     def getTkPixel(self,x,y):
         """Get a pixel at the given x,y coordinate.  The pixel is returned as an rgb color tuple
-        for eaxamplle foo.getPixel(10,10) --> (10,200,156) """
+        for example foo.getPixel(10,10) --> (10,200,156) """
         p = [int(j) for j in self.im.get(x,y).split()]
         return Pixel(p[0],p[1],p[2])
 
     def setTkPixel(self,x,y,pixel):
-        """Set the color of a pixel at position x,y.  The color must be specified as an rgb tuple (r,g,b) where 
+        """Set the color of a pixel at position x,y.  The color must be specified as an rgb tuple (r,g,b) where
         the rgb values are between 0 and 255."""
         if x < self.getWidth() and y < self.getHeight():
             self.im.put(formatPixel(pixel.getColorTuple()),(x,y))
@@ -369,7 +376,7 @@ class AbstractImage(object):
         if suffix not in ['.gif', '.ppm']:
             raise ValueError("Without PIL, only .gif or .ppm files are allowed")
         try:
-            self.im.write(fname,format=ftype)            
+            self.im.write(fname,format=ftype)
         except:
             print("Error saving, Could Not open ", fname, " to write.")
 
@@ -385,7 +392,7 @@ class AbstractImage(object):
             suffix = "."+ftype
             fname = fname+suffix
         try:
-            self.im.save(fname)            
+            self.im.save(fname)
         except:
             print("Error saving, Could Not open ", fname, " to write.")
 
@@ -408,7 +415,7 @@ class FileImage(AbstractImage):
 
 class Image(FileImage):
         pass
-    
+
 class EmptyImage(AbstractImage):
     def __init__(self,cols,rows):
         super(EmptyImage, self).__init__(height = rows, width = cols)
@@ -439,5 +446,3 @@ if __name__ == '__main__':
     myImage.save('/Users/bmiller/tmp/testfoo.jpg')
     print(myImage.toList())
     win.exitOnClick()
-
-
