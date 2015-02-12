@@ -317,7 +317,12 @@ class AbstractImage(object):
     def getTkPixel(self,x,y):
         """Get a pixel at the given x,y coordinate.  The pixel is returned as an rgb color tuple
         for example foo.getPixel(10,10) --> (10,200,156) """
-        p = [int(j) for j in self.im.get(x,y).split()]
+        p = self.im.get(x,y)
+        # p is a string in some tkinter versions; tuple in others.
+        try:
+            p = [int(j) for j in p.split()]
+        except AttributeError:
+            pass
         return Pixel(p[0],p[1],p[2])
 
     def setTkPixel(self,x,y,pixel):
