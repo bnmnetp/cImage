@@ -41,6 +41,12 @@ which serves a similar purpose in the graphics primitive world.
 # Changes:
 #   Negative indices can be used in Pixel's  __getitem__ function
 #   Pixel's __getitem__ function now supports looping i.e. for value in Pixel(0, 1, 2):
+#
+# Giovanni Moretti, Massey University, Palmerston North, New Zealand
+# April 2015
+# Changes:
+# Added _imroot.lift() to ensure that pictures aren't hidden under other Windows
+# (needed on Windows 7 & Python 3.4. Ubuntu 14.04 was fine without it).
 
 try:
     import tkinter
@@ -61,6 +67,15 @@ except:
 tk = tkinter
 _imroot = tk.Tk()
 _imroot.withdraw()
+
+# Make sure the displayed window is on top - otherwise drawing can appear to fail.
+# The _imroot.lift() call was required on Windows 7 - Linux was fine without it
+# not sure about Mac, but there are some tips at
+# http://stackoverflow.com/questions/8691655/how-to-put-a-tkinter-window-on-top-of-the-others
+_imroot.lift()
+#_imroot.call('wm', 'attributes', '.', '-topmost', True)
+#_imroot.after_idle(_imroot.call, 'wm', 'attributes', '.', '-topmost', False)
+
 
 def formatPixel(data):
     if type(data) == tuple:
@@ -220,6 +235,7 @@ class AbstractImage(object):
     """
     imageCache = {} # tk photoimages go here to avoid GC while drawn
     imageId = 1
+
     def __init__(self,fname=None,data=[],imobj=None,height=0,width=0):
         """
         An image can be created using any of the following keyword parameters. When image creation is
@@ -432,7 +448,7 @@ class ListImage(AbstractImage):
 # Example program  Read in an image and calulate the negative.
 if __name__ == '__main__':
     win = ImageWin("My Window",480,640)
-    oImage = FileImage('lcastle.jpg')
+    oImage = FileImage('lcastle.gif')
     print(oImage.getWidth(), oImage.getHeight())
     oImage.draw(win)
     myImage = oImage.copy()
@@ -448,6 +464,6 @@ if __name__ == '__main__':
     myImage.setPosition(myImage.getWidth()+1,0)
     myImage.draw(win)
     print(win.getMouse())
-    myImage.save('/Users/bmiller/tmp/testfoo.jpg')
+    myImage.save('lcastle-greyscale.jpg')
     print(myImage.toList())
     win.exitOnClick()
