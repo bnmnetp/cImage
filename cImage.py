@@ -464,6 +464,6 @@ if __name__ == '__main__':
     myImage.setPosition(myImage.getWidth()+1,0)
     myImage.draw(win)
     print(win.getMouse())
-    myImage.save('lcastle-greyscale.jpg')
+    myImage.save('lcastle-inverted.gif')
     print(myImage.toList())
     win.exitOnClick()
