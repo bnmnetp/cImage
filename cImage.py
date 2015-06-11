@@ -398,8 +398,12 @@ class AbstractImage(object):
             raise ValueError("Without PIL, only .gif or .ppm files are allowed")
         try:
             self.im.write(fname,format=ftype)
-        except:
+        except IOError as e:
+            print(e)
             print("Error saving, Could Not open ", fname, " to write.")
+        except tkinter.TclError as tke:
+            print(tke)
+            print("gif files can only handle 256 distinct colors")
 
     def savePIL(self,fname=None,ftype='jpg'):
         if fname == None:
