@@ -58,6 +58,12 @@ which serves a similar purpose in the graphics primitive world.
 #     closer to the user's code and more intelligible.
 #   Disable the ability of Pixels to range up to 1.0 instead of 255, which
 #     didn't seem used and would make the type checking more complex.
+#
+# Version 1.6 May 2016 Max Hailperin <max@gustavus.edu>
+# Changes:
+#   Add autoShow function that can be used to get and optionally set a flag
+#     that if True makes images automatically be displayed when their printed
+#     representation is produced (e.g. as results in the shell).
 
 try:
     import tkinter
@@ -87,6 +93,17 @@ _imroot.lift()
 #_imroot.call('wm', 'attributes', '.', '-topmost', True)
 #_imroot.after_idle(_imroot.call, 'wm', 'attributes', '.', '-topmost', False)
 
+
+# For backward compatibility, the new autoShow feature is off by default:
+autoShowOn = False
+
+def autoShow(newSetting=None):
+    """Return and optionally change the True/False autoShow setting"""
+    global autoShowOn
+    oldSetting = autoShowOn
+    if newSetting != None:
+        autoShowOn = newSetting
+    return oldSetting
 
 def formatPixel(data):
     if type(data) == tuple:
@@ -453,6 +470,13 @@ class AbstractImage(object):
             for j in range(self.width):
                 res[i].append(self.getPixel(j,i))
         return res
+
+    def __repr__(self):
+        r = super(AbstractImage, self).__repr__()
+        if autoShowOn:
+            w = ImageWin(r, self.width, self.height)
+            self.draw(w)
+        return r
 
 
 class FileImage(AbstractImage):
