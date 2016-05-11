@@ -52,6 +52,12 @@ which serves a similar purpose in the graphics primitive world.
 # Brad Miller
 # distribute on pypi
 #
+# Version 1.5 May 2016 Max Hailperin <max@gustavus.edu>
+# Changes:
+#   Add more checks of parameter types and ranges so error messages are
+#     closer to the user's code and more intelligible.
+#   Disable the ability of Pixels to range up to 1.0 instead of 255, which
+#     didn't seem used and would make the type checking more complex.
 
 try:
     import tkinter
@@ -151,10 +157,10 @@ class Pixel(object):
     """This simple class abstracts the RGB pixel values."""
     def __init__(self, red, green, blue):
         super(Pixel, self).__init__()
-        self.__red = red
-        self.__green = green
-        self.__blue = blue
         self.max = 255
+        self.setRed(red)
+        self.setGreen(green)
+        self.setBlue(blue)
 
     def getRed(self):
         """Return the red component of the pixel"""
@@ -174,21 +180,27 @@ class Pixel(object):
 
     def setRed(self,red):
         """Modify the red component"""
-        if self.max >= red >= 0:
+        if not isinstance(red, int):
+            raise TypeError("Error:  pixel value %r is not an integer" % red)
+        elif self.max >= red >= 0:
             self.__red = red
         else:
             raise ValueError("Error:  pixel value %d is out of range" % red)
 
     def setGreen(self,green):
         """Modify the green component"""
-        if self.max >= green >= 0:
+        if not isinstance(green, int):
+            raise TypeError("Error:  pixel value %r is not an integer" % green)
+        elif self.max >= green >= 0:
             self.__green = green
         else:
             raise ValueError("Error:  pixel value %d is out of range" % green)
 
     def setBlue(self,blue):
         """Modify the blue component"""
-        if self.max >= blue >= 0:
+        if not isinstance(blue, int):
+            raise TypeError("Error:  pixel value %r is not an integer" % blue)
+        elif self.max >= blue >= 0:
             self.__blue = blue
         else:
             raise ValueError("Error:  pixel value %d is out of range" % blue)
@@ -213,6 +225,10 @@ class Pixel(object):
     def setRange(self,pmax):
         """docstring for setRange"""
         if pmax == 1.0:
+            raise ValueError("Range of 1.0 is not currently supported")
+            # This raising of an error was inserted  in conjunction with
+            # requiring the values to be integers, which is necessary for
+            # formatPixel to work correctly. Was 1.0 ever used?
             self.max = 1.0
         elif pmax == 255:
             self.max = 255
@@ -441,6 +457,8 @@ class AbstractImage(object):
 
 class FileImage(AbstractImage):
     def __init__(self,thefile):
+        if not isinstance(thefile, str):
+            raise TypeError("Error: file name %r not a string" % thefile)
         super(FileImage, self).__init__(fname = thefile)
 
 class Image(FileImage):
@@ -448,10 +466,21 @@ class Image(FileImage):
 
 class EmptyImage(AbstractImage):
     def __init__(self,cols,rows):
+        if not isinstance(cols, int):
+            raise TypeError("Error: width %r not an integer" % cols)
+        if cols <= 0:
+            raise ValueError("Error: width %d not positive" % cols)
+        if not isinstance(rows, int):
+            raise TypeError("Error: height %r not an integer" % rows)
+        if rows <= 0:
+            raise ValueError("Error: height %d not positive" % rows)
         super(EmptyImage, self).__init__(height = rows, width = cols)
 
 class ListImage(AbstractImage):
     def __init__(self,thelist):
+        # Note that the corresponding code in AbstractImage doesn't work
+        # so apparently ListImage isn't used. As such, there doesn't seem
+        # to be much point in adding error checking.
         super(ListImage, self).__init__(data=thelist)
 
 # Example program  Read in an image and calulate the negative.
