@@ -47,6 +47,11 @@ which serves a similar purpose in the graphics primitive world.
 # Changes:
 # Added _imroot.lift() to ensure that pictures aren't hidden under other Windows
 # (needed on Windows 7 & Python 3.4. Ubuntu 14.04 was fine without it).
+#
+# version 1.4 
+# Brad Miller
+# distribute on pypi
+#
 
 try:
     import tkinter
