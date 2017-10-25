@@ -10,7 +10,7 @@ setup(
     py_modules = ['cImage'],
     author = 'Brad Miller',
     author_email = 'bonelake@mac.com',
-    install_requires= ['Pillow==2.9.0'],
+    install_requires= ['Pillow>=2.9.0'],
     include_package_data = False,
     license='GPL',
     url = 'https://github.com/bnmnetp/cImage',
