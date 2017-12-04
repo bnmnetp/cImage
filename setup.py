@@ -4,7 +4,7 @@ from setuptools import setup
 #    dependencies = [l.strip() for l in fh]
 
 setup(
-    name='image',
+    name='cs20-image',
     description='Image manipulation library for media computation education',
     version='1.5.1',
     py_modules = ['image'],
