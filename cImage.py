@@ -92,7 +92,7 @@ class ImageWin(tk.Canvas):
     """
     ImageWin:  Make a frame to display one or more images.
     """
-    def __init__(self,title="image window",width=640,height=640):
+    def __init__(self,width=640,height=640,title="image window"):
         """
         Create a window with a title, width and height.
         """
@@ -119,6 +119,12 @@ class ImageWin(tk.Canvas):
         self.master.destroy()
         self.quit()
         _imroot.update()
+
+    def setDelay(delay=0, interval=0):
+    """Just a stub so that programs copy/pasted from an online textbook do not crash."""
+        print("The setDelay function is not implemented in this version of the image module. " \
+              "To animate your code, put img.draw(win) inside your nested loop, indented the " \
+              "same amount as the inner loop.")
 
     def getMouse(self):
         """Wait for mouse click and return a tuple with x,y position in screen coordinates after
@@ -456,7 +462,7 @@ class ListImage(AbstractImage):
 
 # Example program  Read in an image and calulate the negative.
 if __name__ == '__main__':
-    win = ImageWin("My Window",480,640)
+    win = ImageWin(480,640)
     oImage = FileImage('lcastle.gif')
     print(oImage.getWidth(), oImage.getHeight())
     oImage.draw(win)
