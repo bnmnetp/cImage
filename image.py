@@ -521,23 +521,27 @@ class ListImage(AbstractImage):
 
 # Example program  Read in an image and calulate the negative.
 if __name__ == '__main__':
-    win = ImageWin(480,640)
-    oImage = FileImage('lcastle.gif')
-    print(oImage.get_width(), oImage.get_height())
-    oImage.draw(win)
-    myImage = oImage.copy()
+    win = ImageWin(480, 640, "Image Processing")
+    original_iamge = FileImage('lcastle.gif')
 
-    for row in range(myImage.get_height()):
-        for col in range(myImage.get_width()):
-             v = myImage.get_pixel(col,row)
+    width = original_iamge.get_width()
+    height = original_iamge.get_height()
+    print(width, height)
+
+    original_iamge.draw(win)
+    my_image = original_iamge.copy()
+
+    for row in range(height):
+        for col in range(width):
+             v = my_image.get_pixel(col,row)
              v.red = 255 - v.red
              v.green = 255 - v.green
              v.blue = 255 - v.blue
 #             x = map(lambda x: 255-x, v)
-             myImage.set_pixel(col,row,v)
+             my_image.set_pixel(col,row,v)
 
-    myImage.draw(win)
+    my_image.draw(win)
     print(win.get_mouse())
-    myImage.save('lcastle-inverted.gif')
-    print(myImage.to_list())
+    my_image.save('lcastle-inverted.gif')
+    print(my_image.to_list())
     win.exit_on_click()

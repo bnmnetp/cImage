@@ -5,7 +5,11 @@ cImage  -  A simple image processing library for Python
 Installation
 ============
 
-copy cImage.py to your site-packages directory.
+
+If using Thonny, go to Tools -> Manage Packages, then enter ``cs20-image``. This should install both the image module, and the Pillow module (so you can use any type of image you'd like).
+
+
+If you are not using Thonny, copy image.py to your site-packages directory, or just keep it in the same folder as the Python scripts that import it.
 
 
 Usage
@@ -16,7 +20,7 @@ This image library is not going to give you fancy high performance operations on
 Image Types Supported
 ---------------------
 
-If you have PIL installed on your system:
+If you have PIL installed on your system (if you are using Thonny, this was installed along with the image module):
 
 * jpeg
 * gif
@@ -26,37 +30,34 @@ If you have PIL installed on your system:
 
 If you do not have PIL installed then you are stuck with GIF images only.
 
-If you are using Python 2.6/2.7 I recommend you install Pillow its a simple fork
-of PIL that you can install with easy_install or pip.
-
-If you are using Python 3 You can get a working version of PIL
-Here:  https://pypi.python.org/pypi/Pillow/2.0.0
-
-Note that if you scroll down to the bottom you will find binary installations for Windows.  Linux and Mac users can follow the instructions on the page.
-
 
 Example
 -------
 
 ::
 
-    from cImage import *
-    myimagewindow = ImageWin("Image Processing",600,300)
-    oldimage = FileImage("lutherbell.jpg")
-    oldimage.setPosition(0,0)
-    oldimage.draw(myimagewindow)
+    import image
 
-    width = oldimage.getWidth()
-    height = oldimage.getHeight()
-    newim = EmptyImage(width,height)
+    win = image.ImageWin(480, 640, "Image Processing")
+    original_image = image.FileImage('lcastle.gif')
+
+    width = original_image.get_width()
+    height = original_image.get_height()
+    print(width, height)
+
+    original_image.draw(win)
+    my_image = original_image.copy()
 
     for row in range(height):
-    	for col in range(width):
-    		oldpixel = oldimage.getPixel(col,row)
-    		ave=(oldpixel.getRed()+oldpixel.getGreen()+oldpixel.getBlue())/3
-    		newim.setPixel(col,row,Pixel(ave,ave,ave))
+        for col in range(width):
+             v = my_image.get_pixel(col,row)
+             v.red = 255 - v.red
+             v.green = 255 - v.green
+             v.blue = 255 - v.blue
+             my_image.set_pixel(col,row,v)
 
-    newim.setPosition(width+1,0)
-    newim.draw(myimagewindow)
-
-    myimagewindow.exitOnClick()
+    my_image.draw(win)
+    print(win.get_mouse())
+    my_image.save('lcastle-inverted.gif')
+    print(my_image.to_list())
+    win.exit_on_click()

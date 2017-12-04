@@ -4,12 +4,12 @@ from setuptools import setup
 #    dependencies = [l.strip() for l in fh]
 
 setup(
-    name='cImage',
+    name='image',
     description='Image manipulation library for media computation education',
-    version='1.4.2',
-    py_modules = ['cImage'],
-    author = 'Brad Miller',
-    author_email = 'bonelake@mac.com',
+    version='1.5.1',
+    py_modules = ['image'],
+    author = 'Brad Miller and Dan Schellenberg',
+    author_email = 'schellenberg@gmail.com',
     install_requires= ['Pillow>=2.9.0'],
     include_package_data = False,
     license='GPL',
