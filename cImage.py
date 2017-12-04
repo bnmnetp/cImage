@@ -52,6 +52,12 @@ which serves a similar purpose in the graphics primitive world.
 # Brad Miller
 # distribute on pypi
 #
+# Dan Schellenberg
+# Dec 2017
+# Changes:
+#   Add setDelay function stub to avoid code copied from Runestone-type textbook examples to crash
+#   Reorder parameters for ImageWin constructor, so Runestone-type examples behave without window name
+#   Added underscore_separated_function_calls to allow for either mixedCase or under_score calls
 
 try:
     import tkinter
@@ -121,10 +127,13 @@ class ImageWin(tk.Canvas):
         _imroot.update()
 
     def setDelay(delay=0, interval=0):
-    """Just a stub so that programs copy/pasted from an online textbook do not crash."""
+        """Just a stub so that programs copy/pasted from an online textbook do not crash."""
         print("The setDelay function is not implemented in this version of the image module. " \
               "To animate your code, put img.draw(win) inside your nested loop, indented the " \
               "same amount as the inner loop.")
+
+    def set_delay(delay=0, interval=0):
+        self.setDelay(delay, interval)
 
     def getMouse(self):
         """Wait for mouse click and return a tuple with x,y position in screen coordinates after
@@ -135,14 +144,23 @@ class ImageWin(tk.Canvas):
             self.update()
         return ((self.mouseX,self.mouseY))
 
+    def get_mouse(self):
+        return self.getMouse()
+
     def setMouseHandler(self, func):
         self._mouseCallback = func
+
+    def set_mouse_handler(self, func):
+        self.setMouseHandler(func)
 
     def _onClick(self, e):
         self.mouseX = e.x
         self.mouseY = e.y
         if self._mouseCallback:
             self._mouseCallback(e.x, e.y)
+
+    def _on_click(self, e):
+        self._onClick(e)
 
     def exitOnClick(self):
         """When the Mouse is clicked close the window and exit"""
@@ -152,6 +170,8 @@ class ImageWin(tk.Canvas):
     def exitonclick(self):
         self.exitOnClick()
 
+    def exit_on_click(self):
+        self.exitOnClick()
 
 class Pixel(object):
     """This simple class abstracts the RGB pixel values."""
@@ -166,17 +186,29 @@ class Pixel(object):
         """Return the red component of the pixel"""
         return self.__red
 
+    def get_red(self):
+        return self.getRed()
+
     def getGreen(self):
         """Return the green component of the pixel"""
         return self.__green
+
+    def get_green(self):
+        return self.getGreen()
 
     def getBlue(self):
         """Return the blue component of the pixel"""
         return self.__blue
 
+    def get_blue(self):
+        return self.getBlue()
+
     def getColorTuple(self):
         """Return all color information as a tuple"""
         return (self.__red, self.__green, self.__blue)
+
+    def get_color_tuple(self):
+        return self.getColorTuple()
 
     def setRed(self,red):
         """Modify the red component"""
@@ -185,6 +217,9 @@ class Pixel(object):
         else:
             raise ValueError("Error:  pixel value %d is out of range" % red)
 
+    def set_red(self, red):
+        self.setRed(red)
+
     def setGreen(self,green):
         """Modify the green component"""
         if self.max >= green >= 0:
@@ -192,12 +227,18 @@ class Pixel(object):
         else:
             raise ValueError("Error:  pixel value %d is out of range" % green)
 
+    def set_green(self, green):
+        self.setGreen(green)
+
     def setBlue(self,blue):
         """Modify the blue component"""
         if self.max >= blue >= 0:
             self.__blue = blue
         else:
             raise ValueError("Error:  pixel value %d is out of range" % blue)
+
+    def set_blue(self, blue):
+        self.setBlue(blue)
 
     def __getitem__(self,key):
         """Allow new style pixel class to act like a color tuple:
@@ -224,6 +265,9 @@ class Pixel(object):
             self.max = 255
         else:
             raise ValueError("Error range must be 1.0 or 256")
+
+    def set_range(self, pmax):
+        self.setRange(pmax)
 
     def __str__(self):
         return str(self.getColorTuple())
@@ -265,13 +309,17 @@ class AbstractImage(object):
             self.loadImage = self.loadPILImage
             self.createBlankImage = self.createBlankPILImage
             self.setPixel = self.setPILPixel
+            self.set_pixel = self.setPILPixel
             self.getPixel = self.getPILPixel
+            self.get_pixel = self.getPILPixel
             self.save = self.savePIL
         else:
             self.loadImage = self.loadTkImage
             self.createBlankImage = self.createBlankTkImage
             self.setPixel = self.setTkPixel
+            self.set_pixel = self.setTkPixel
             self.getPixel = self.getTkPixel
+            self.get_pixel = self.getTkPixel
             self.save = self.saveTk
 
         if fname:
@@ -337,8 +385,14 @@ class AbstractImage(object):
         """Return the height of the image"""
         return self.height
 
+    def get_height(self):
+        return self.height
+
     def getWidth(self):
         """Return the width of the iamge"""
+        return self.width
+
+    def get_width(self):
         return self.width
 
     def getTkPixel(self,x,y):
@@ -378,6 +432,9 @@ class AbstractImage(object):
         self.left = x
         self.centerX = x + (self.width/2)+3
         self.centerY = y + (self.height/2)+3
+
+    def set_postion(self, x, y):
+        self.setPosition(x, y)
 
     def getImage(self):
         if pilAvailable:
@@ -444,6 +501,8 @@ class AbstractImage(object):
                 res[i].append(self.getPixel(j,i))
         return res
 
+    def to_list(self):
+        return self.toList()
 
 class FileImage(AbstractImage):
     def __init__(self,thefile):
@@ -464,21 +523,21 @@ class ListImage(AbstractImage):
 if __name__ == '__main__':
     win = ImageWin(480,640)
     oImage = FileImage('lcastle.gif')
-    print(oImage.getWidth(), oImage.getHeight())
+    print(oImage.get_width(), oImage.get_height())
     oImage.draw(win)
     myImage = oImage.copy()
 
-    for row in range(myImage.getHeight()):
-        for col in range(myImage.getWidth()):
-             v = myImage.getPixel(col,row)
+    for row in range(myImage.get_height()):
+        for col in range(myImage.get_width()):
+             v = myImage.get_pixel(col,row)
              v.red = 255 - v.red
              v.green = 255 - v.green
              v.blue = 255 - v.blue
 #             x = map(lambda x: 255-x, v)
-             myImage.setPixel(col,row,v)
-    myImage.setPosition(myImage.getWidth()+1,0)
+             myImage.set_pixel(col,row,v)
+
     myImage.draw(win)
-    print(win.getMouse())
+    print(win.get_mouse())
     myImage.save('lcastle-inverted.gif')
-    print(myImage.toList())
-    win.exitOnClick()
+    print(myImage.to_list())
+    win.exit_on_click()
