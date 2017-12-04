@@ -126,15 +126,6 @@ class ImageWin(tk.Canvas):
         self.quit()
         _imroot.update()
 
-    def setDelay(delay=0, interval=0):
-        """Just a stub so that programs copy/pasted from an online textbook do not crash."""
-        print("The setDelay function is not implemented in this version of the image module. " \
-              "To animate your code, put img.draw(win) inside your nested loop, indented the " \
-              "same amount as the inner loop.")
-
-    def set_delay(delay=0, interval=0):
-        self.setDelay(delay, interval)
-
     def getMouse(self):
         """Wait for mouse click and return a tuple with x,y position in screen coordinates after
         the click"""
@@ -345,6 +336,15 @@ class AbstractImage(object):
         self.centerX = self.width/2+3     # +3 accounts for the ~3 pixel border in Tk windows
         self.centerY = self.height/2+3
         self.id = None
+
+    def setDelay(self, delay=0, interval=0):
+        """Just a stub so that programs copy/pasted from an online textbook do not crash."""
+        print("The setDelay function is not implemented in this version of the image module. " \
+              "To animate your code, put img.draw(win) inside your nested loop, indented the " \
+              "same amount as the inner loop.")
+
+    def set_delay(self, delay=0, interval=0):
+        self.setDelay(delay, interval)
 
     def loadPILImage(self,fname):
         self.im = PIL_Image.open(fname)
