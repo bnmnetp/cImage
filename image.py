@@ -175,28 +175,28 @@ class Pixel(object):
 
     def getRed(self):
         """Return the red component of the pixel"""
-        return self.__red
+        return int(self.__red)
 
     def get_red(self):
         return self.getRed()
 
     def getGreen(self):
         """Return the green component of the pixel"""
-        return self.__green
+        return int(self.__green)
 
     def get_green(self):
         return self.getGreen()
 
     def getBlue(self):
         """Return the blue component of the pixel"""
-        return self.__blue
+        return int(self.__blue)
 
     def get_blue(self):
         return self.getBlue()
 
     def getColorTuple(self):
         """Return all color information as a tuple"""
-        return (self.__red, self.__green, self.__blue)
+        return (int(self.__red), int(self.__green), int(self.__blue))
 
     def get_color_tuple(self):
         return self.getColorTuple()
@@ -204,7 +204,7 @@ class Pixel(object):
     def setRed(self,red):
         """Modify the red component"""
         if self.max >= red >= 0:
-            self.__red = red
+            self.__red = int(red)
         else:
             raise ValueError("Error:  pixel value %d is out of range" % red)
 
@@ -214,7 +214,7 @@ class Pixel(object):
     def setGreen(self,green):
         """Modify the green component"""
         if self.max >= green >= 0:
-            self.__green = green
+            self.__green = int(green)
         else:
             raise ValueError("Error:  pixel value %d is out of range" % green)
 
@@ -224,7 +224,7 @@ class Pixel(object):
     def setBlue(self,blue):
         """Modify the blue component"""
         if self.max >= blue >= 0:
-            self.__blue = blue
+            self.__blue = int(blue)
         else:
             raise ValueError("Error:  pixel value %d is out of range" % blue)
 
