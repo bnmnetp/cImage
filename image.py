@@ -64,7 +64,7 @@ which serves a similar purpose in the graphics primitive world.
 # Changes:
 #   Force the Pixel object to store all rgb values as int's, to avoid students getting errors when
 #       they divide in their image manipulation calculations
-
+#   Make EmptyImage's show up with white backgrounds, for both PIL and tkinter
 
 try:
     import tkinter
@@ -116,7 +116,7 @@ class ImageWin(tk.Canvas):
         self.master.title(title)
         self.pack()
         master.resizable(0,0)
-        self.foreground = "black"
+        self.foreground = "white"
         self.items = []
         self.mouseX = None
         self.mouseY = None
@@ -369,13 +369,15 @@ class AbstractImage(object):
         self.im = tkinter.PhotoImage(file=fname)
 
     def createBlankPILImage(self,height,width):
-        self.im = PIL_Image.new("RGB",(width,height))
+        self.im = PIL_Image.new("RGB",(width,height), (255, 255, 255))
         ni = self.im.convert("RGB")
         self.im = ni
 
     def createBlankTkImage(self,height,width):
         self.im = tkinter.PhotoImage(height=height,width=width)
-
+        hexcode = "#%02x%02x%02x" % (255,255,255)
+        horizontal_line = "{" + " ".join([hexcode]*width) + "}"
+        self.im.put(" ".join([horizontal_line]*height))
 
     def copy(self):
         """Return a copy of this image"""
