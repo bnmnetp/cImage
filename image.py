@@ -58,6 +58,13 @@ which serves a similar purpose in the graphics primitive world.
 #   Add setDelay function stub to avoid code copied from Runestone-type textbook examples to crash
 #   Reorder parameters for ImageWin constructor, so Runestone-type examples behave without window name
 #   Added underscore_separated_function_calls to allow for either mixedCase or under_score calls
+#
+# Dan Schellenberg
+# Apr 2018
+# Changes:
+#   Force the Pixel object to store all rgb values as int's, to avoid students getting errors when
+#       they divide in their image manipulation calculations
+
 
 try:
     import tkinter
