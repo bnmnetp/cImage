@@ -6,7 +6,7 @@ from setuptools import setup
 setup(
     name='cs20-image',
     description='Image manipulation library for media computation education',
-    version='1.5.3',
+    version='1.5.4',
     py_modules = ['image'],
     author = 'Brad Miller and Dan Schellenberg',
     author_email = 'schellenberg@gmail.com',
