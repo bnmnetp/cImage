@@ -6,7 +6,7 @@ from setuptools import setup
 setup(
     name='cImage',
     description='Image manipulation library for media computation education',
-    version='2.0.0',
+    version='2.0.1',
     py_modules = ['image'],
     author = 'Brad Miller and Dan Schellenberg',
     author_email = 'bonelake@mac.com',
