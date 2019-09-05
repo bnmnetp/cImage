@@ -4,12 +4,12 @@ from setuptools import setup
 #    dependencies = [l.strip() for l in fh]
 
 setup(
-    name='cs20-image',
+    name='cImage',
     description='Image manipulation library for media computation education',
-    version='1.5.4',
+    version='2.0.0',
     py_modules = ['image'],
     author = 'Brad Miller and Dan Schellenberg',
-    author_email = 'schellenberg@gmail.com',
+    author_email = 'bonelake@mac.com',
     install_requires= ['Pillow>=2.9.0'],
     include_package_data = False,
     license='GPL',
@@ -22,7 +22,7 @@ setup(
                    'Operating System :: MacOS',
                    'Operating System :: Unix',
                    'Programming Language :: Python',
-                   'Programming Language :: Python :: 3.4',
+                   'Programming Language :: Python :: 3.7',
                    'Topic :: Education'),
     long_description=open('README.rst').read(),
 )

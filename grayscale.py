@@ -1,12 +1,12 @@
-from cImage import *
+from image import *
 
 def grayPixel(p):
     avg = (p.getRed() + p.getGreen() + p.getBlue()) // 3
     return Pixel(avg,avg,avg)
 
 def makeGrayScale(imageFile):
-    myimagewindow = ImageWin("Image Processing",600,200)
-    oldimage = Image(imageFile)            
+    myimagewindow = ImageWin(600,200, "Image Processing")
+    oldimage = Image(imageFile)
     oldimage.draw(myimagewindow)
 
     width = oldimage.getWidth()
@@ -23,4 +23,4 @@ def makeGrayScale(imageFile):
     newim.draw(myimagewindow)
     myimagewindow.exitOnClick()
 
-makeGrayScale('lcastle.gif')
+makeGrayScale('lcastle.jpg')

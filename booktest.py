@@ -1,4 +1,4 @@
-import cImage as image
+import image
 
 img = image.Image("lcastle.gif")
 newimg = image.EmptyImage(img.getWidth(),img.getHeight())
