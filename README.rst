@@ -31,10 +31,10 @@ If you have PIL installed on your system (if you are using Thonny, this was inst
 If you do not have PIL installed then you are stuck with GIF images only.
 
 
-Example for using within Thonny
--------------------------------
+Example
+-------
 
-After installation copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
+After installation from pip copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
 
 .. code-block:: python
 
