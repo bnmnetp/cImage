@@ -43,8 +43,8 @@ After installation copy `the example image <https://github.com/bnmnetp/cImage/bl
     win = image.ImageWin(480, 640, "Image Processing")
     original_image = image.FileImage('lcastle.gif')
 
-    width = original_image.getWidth()
-    height = original_image.getHeight()
+    width = original_image.get_width()
+    height = original_image.get_height()
     print(width, height)
 
     original_image.draw(win)
@@ -52,14 +52,15 @@ After installation copy `the example image <https://github.com/bnmnetp/cImage/bl
 
     for row in range(height):
         for col in range(width):
-            v = my_image.getPixel(col,row)
+            v = my_image.get_pixel(col,row)
             v.red = 255 - v.red
             v.green = 255 - v.green
             v.blue = 255 - v.blue
-            my_image.setPixel(col,row,v)
-
+            my_image.set_pixel(col,row,v)
+    
+    my_image.set_position(my_image.get_width()+1,0)
     my_image.draw(win)
-    print(win.getMouse())
+    print(win.get_mouse())
     my_image.save('lcastle-inverted.gif')
-    print(my_image.toList())
+    print(my_image.to_list())
     win.exit_on_click()
