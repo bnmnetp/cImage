@@ -6,7 +6,7 @@ Installation
 ============
 
 
-If using Thonny, go to Tools -> Manage Packages, then enter ``cs20-image``. This should install both the image module, and the Pillow module (so you can use any type of image you'd like).
+If using Thonny, go to Tools -> Manage Packages, then enter ``cImage``. This should install both the image module, and the Pillow module (so you can use any type of image you'd like).
 
 
 If you are not using Thonny, copy image.py to your site-packages directory, or just keep it in the same folder as the Python scripts that import it.
@@ -31,8 +31,10 @@ If you have PIL installed on your system (if you are using Thonny, this was inst
 If you do not have PIL installed then you are stuck with GIF images only.
 
 
-Example
--------
+Example for using within Thonny
+-------------------------------
+
+After installation Copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
 
 ::
 
@@ -41,8 +43,8 @@ Example
     win = image.ImageWin(480, 640, "Image Processing")
     original_image = image.FileImage('lcastle.gif')
 
-    width = original_image.get_width()
-    height = original_image.get_height()
+    width = original_image.getWidth()
+    height = original_image.getHeight()
     print(width, height)
 
     original_image.draw(win)
@@ -50,14 +52,14 @@ Example
 
     for row in range(height):
         for col in range(width):
-             v = my_image.get_pixel(col,row)
-             v.red = 255 - v.red
-             v.green = 255 - v.green
-             v.blue = 255 - v.blue
-             my_image.set_pixel(col,row,v)
+            v = my_image.getPixel(col,row)
+            v.red = 255 - v.red
+            v.green = 255 - v.green
+            v.blue = 255 - v.blue
+            my_image.setPixel(col,row,v)
 
     my_image.draw(win)
-    print(win.get_mouse())
+    print(win.getMouse())
     my_image.save('lcastle-inverted.gif')
-    print(my_image.to_list())
+    print(my_image.toList())
     win.exit_on_click()
