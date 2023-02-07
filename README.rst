@@ -34,7 +34,7 @@ If you do not have PIL installed then you are stuck with GIF images only.
 Example for using within Thonny
 -------------------------------
 
-After installation Copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
+After installation copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
 
 ::
 
