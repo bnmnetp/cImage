@@ -6,7 +6,7 @@ Installation
 ============
 
 
-If using Thonny, go to Tools -> Manage Packages, then enter ``cs20-image``. This should install both the image module, and the Pillow module (so you can use any type of image you'd like).
+If using Thonny, go to Tools -> Manage Packages, then enter ``cImage``. This should install both the image module, and the Pillow module (so you can use any type of image you'd like).
 
 
 If you are not using Thonny, copy image.py to your site-packages directory, or just keep it in the same folder as the Python scripts that import it.
@@ -34,7 +34,9 @@ If you do not have PIL installed then you are stuck with GIF images only.
 Example
 -------
 
-::
+After installation from pip copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
+
+.. code-block:: python
 
     import image
 
@@ -50,12 +52,13 @@ Example
 
     for row in range(height):
         for col in range(width):
-             v = my_image.get_pixel(col,row)
-             v.red = 255 - v.red
-             v.green = 255 - v.green
-             v.blue = 255 - v.blue
-             my_image.set_pixel(col,row,v)
-
+            v = my_image.get_pixel(col,row)
+            v.red = 255 - v.red
+            v.green = 255 - v.green
+            v.blue = 255 - v.blue
+            my_image.set_pixel(col,row,v)
+    
+    my_image.set_position(my_image.get_width()+1,0)
     my_image.draw(win)
     print(win.get_mouse())
     my_image.save('lcastle-inverted.gif')
