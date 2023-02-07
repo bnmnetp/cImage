@@ -475,7 +475,7 @@ class AbstractImage(object):
         self.centerX = x + (self.width/2)+3
         self.centerY = y + (self.height/2)+3
 
-    def set_postion(self, x, y):
+    def set_position(self, x, y):
         self.setPosition(x, y)
 
     def getImage(self):
@@ -585,14 +585,14 @@ class ListImage(AbstractImage):
 # Example program  Read in an image and calulate the negative.
 if __name__ == '__main__':
     win = ImageWin(480, 640, "Image Processing")
-    original_iamge = FileImage('lcastle.gif')
+    original_image = FileImage('lcastle.gif')
 
-    width = original_iamge.get_width()
-    height = original_iamge.get_height()
+    width = original_image.get_width()
+    height = original_image.get_height()
     print(width, height)
 
-    original_iamge.draw(win)
-    my_image = original_iamge.copy()
+    original_image.draw(win)
+    my_image = original_image.copy()
 
     for row in range(height):
         for col in range(width):
