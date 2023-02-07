@@ -36,7 +36,7 @@ Example for using within Thonny
 
 After installation copy `the example image <https://github.com/bnmnetp/cImage/blob/master/lcastle.gif>`_ to your working directory and execute
 
-::
+.. code-block:: python
 
     import image
 
